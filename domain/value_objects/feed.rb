@@ -1,0 +1,1 @@
+Feed = Struct.new(:type, :address)

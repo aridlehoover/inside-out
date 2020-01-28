@@ -1,0 +1,1 @@
+FeedItem = Struct.new(:title, :description, :publish_at, :effective_at, :expires_at)
