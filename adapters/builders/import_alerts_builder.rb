@@ -4,20 +4,20 @@ require_relative '../actions/notify_subscribers_action'
 require_relative '../factories/reader_factory'
 
 class ImportAlertsBuilder
-  attr_reader :feed, :user, :actions
+  attr_reader :reader, :actions
 
-  def initialize(feed:, user:)
-    @feed = feed
+  def initialize(reader:)
+    @reader = reader
     @actions = []
   end
 
-  def with_change_log(user, params)
-    actions << LogChangesAction.new(:import_alerts, user: user, params: params)
+  def with_change_log(user:, feed:)
+    actions << LogChangesAction.new(:import_alerts, user: user, params: { feed: feed })
     self
   end
 
-  def with_http_response(params)
-    actions << HttpResponseAction.new(params)
+  def with_http_response(controller:)
+    actions << HttpResponseAction.new(controller)
     self
   end
 
@@ -28,11 +28,5 @@ class ImportAlertsBuilder
 
   def build
     ImportAlerts.new(reader: reader, observers: actions)
-  end
-
-  private
-
-  def reader
-    ReaderFactory.build(feed)
   end
 end

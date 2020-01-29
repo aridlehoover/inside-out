@@ -3,15 +3,19 @@ require_relative '../../domain/value_objects/feed'
 
 class AlertsController
   def import
-    ImportAlertsBuilder.new(feed)
-      .with_change_log
-      .with_http_response(self)
+    ImportAlertsBuilder.new(reader)
+      .with_change_log(user: current_user, feed: feed)
+      .with_http_response(controller: self)
       .with_subscriber_notification
       .build
       .perform
   end
 
   private
+
+  def reader
+    ReaderFactory.build(feed)
+  end
 
   def feed
     Feed.new(type: feed_type, address: address)
