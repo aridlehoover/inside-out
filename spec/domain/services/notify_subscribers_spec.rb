@@ -70,13 +70,12 @@ describe NotifySubscribers do
         it 'notifies each subscriber of the active alerts' do
           expect(factory).to have_received(:build).with(subscriber1)
           expect(factory).to have_received(:build).with(subscriber2)
-          expect(notifier1).to have_received(:notify).with(active_alerts)
-          expect(notifier2).to have_received(:notify).with(active_alerts)
+          expect([notifier1, notifier2]).to all have_received(:notify).with(active_alerts)
         end
 
         it 'notifies each observer of success for each subscriber' do
-          expect(action1).to have_received(:on_success).with(subscriber1)
-          expect(action1).to have_received(:on_success).with(subscriber2)
+          expect(actions).to all have_received(:on_success).with(subscriber1)
+          expect(actions).to all have_received(:on_success).with(subscriber2)
         end
       end
     end
