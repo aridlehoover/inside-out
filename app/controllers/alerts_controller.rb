@@ -4,9 +4,9 @@ require_relative '../../domain/value_objects/feed'
 class AlertsController
   def import
     ImportAlertsBuilder.new(reader)
-      .with_change_log(user: current_user, feed: feed)
+      .with_change_log(logger: logger, user: current_user, feed: feed)
       .with_http_response(controller: self)
-      .with_subscriber_notification
+      .with_subscriber_notification(notifier_factory: notifier_factory)
       .build
       .perform
   end
@@ -15,6 +15,14 @@ class AlertsController
 
   def reader
     ReaderFactory.build(feed)
+  end
+
+  def logger
+    Logger
+  end
+
+  def notifier_factory
+    NotifierFactory
   end
 
   def feed

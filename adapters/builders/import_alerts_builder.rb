@@ -11,8 +11,8 @@ class ImportAlertsBuilder
     @actions = []
   end
 
-  def with_change_log(user:, feed:)
-    actions << LogChangesAction.new(:import_alerts, user: user, params: { feed: feed })
+  def with_change_log(logger:, user:, feed:)
+    actions << LogChangesAction.new(logger: logger, service: :import_alerts, user: user, params: { feed: feed })
     self
   end
 
@@ -21,8 +21,8 @@ class ImportAlertsBuilder
     self
   end
 
-  def with_subscriber_notification
-    actions << NotifySubscribersAction.new
+  def with_subscriber_notification(notifier_factory:)
+    actions << NotifySubscribersAction.new(notifier_factory: notifier_factory)
     self
   end
 
