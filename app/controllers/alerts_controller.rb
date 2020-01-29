@@ -6,7 +6,7 @@ class AlertsController
     ImportAlertsBuilder.new(reader)
       .with_change_log(logger: logger, user: current_user, feed: feed)
       .with_http_response(controller: self)
-      .with_subscriber_notification(notifier_factory: notifier_factory)
+      .with_subscriber_notification(factory: factory)
       .build
       .perform
   end
@@ -21,7 +21,7 @@ class AlertsController
     Logger
   end
 
-  def notifier_factory
+  def factory
     NotifierFactory
   end
 

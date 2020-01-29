@@ -1,4 +1,4 @@
-require_relative '../../../adapters/builders/import_alerts_builder'
+require_relative '../../../domain/builders/import_alerts_builder'
 require_relative '../../../domain/value_objects/feed'
 require_relative '../../../domain/entities/user'
 
@@ -42,9 +42,9 @@ describe ImportAlertsBuilder do
   end
 
   describe '#with_subscriber_notification' do
-    subject(:with_subscriber_notification) { builder.with_subscriber_notification(notifier_factory: notifier_factory) }
+    subject(:with_subscriber_notification) { builder.with_subscriber_notification(factory: factory) }
 
-    let(:notifier_factory) { instance_double('notifier_factory') }
+    let(:factory) { instance_double('factory') }
 
     it 'adds a change log action to the list of actions' do
       with_subscriber_notification
@@ -66,10 +66,10 @@ describe ImportAlertsBuilder do
     end
 
     context 'when actions are configured' do
-      let(:notifier_factory) { instance_double('notifier_factory') }
+      let(:factory) { instance_double('factory') }
 
       before do
-        builder.with_subscriber_notification(notifier_factory: notifier_factory)
+        builder.with_subscriber_notification(factory: factory)
       end
 
       it 'has actions' do

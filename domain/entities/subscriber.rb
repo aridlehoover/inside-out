@@ -1,0 +1,3 @@
+class Subscriber
+
+end

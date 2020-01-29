@@ -1,7 +1,7 @@
 class NotifySubscribersAction
-  attr_reader :notifier_factory
+  attr_reader :factory
 
-  def initialize(notifier_factory:)
-    @notifier_factory = notifier_factory
+  def initialize(factory:)
+    @factory = factory
   end
 end

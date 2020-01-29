@@ -1,7 +1,6 @@
 require_relative '../actions/log_changes_action'
 require_relative '../actions/http_response_action'
 require_relative '../actions/notify_subscribers_action'
-require_relative '../factories/reader_factory'
 
 class ImportAlertsBuilder
   attr_reader :reader, :actions
@@ -17,12 +16,12 @@ class ImportAlertsBuilder
   end
 
   def with_http_response(controller:)
-    actions << HttpResponseAction.new(controller)
+    actions << HttpResponseAction.new(controller: controller)
     self
   end
 
-  def with_subscriber_notification(notifier_factory:)
-    actions << NotifySubscribersAction.new(notifier_factory: notifier_factory)
+  def with_subscriber_notification(factory:)
+    actions << NotifySubscribersAction.new(factory: factory)
     self
   end
 
