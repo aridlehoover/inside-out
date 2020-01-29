@@ -1,5 +1,5 @@
 class LogChangesAction
-  attr_reader :service, :user, :params
+  attr_reader :logger, :service, :user, :params
 
   def initialize(logger:, service:, user:, params: {})
     @logger = logger
