@@ -1,27 +1,26 @@
-require_relative '../actions/log_changes_action'
+require_relative '../actions/log_action'
 require_relative '../actions/http_response_action'
-require_relative '../actions/notify_subscribers_action'
+require_relative '../actions/notification_action'
 
 class ImportAlertsBuilder
-  attr_reader :reader, :actions
+  attr_reader :logger, :user, :reader, :feed, :actions
 
-  def initialize(reader:)
+  def initialize(logger:, user:, reader:, feed:)
+    @logger = logger
+    @user = user
     @reader = reader
+    @feed = feed
     @actions = []
-  end
-
-  def with_change_log(logger:, user:, feed:)
-    actions << LogChangesAction.new(logger: logger, service: :import_alerts, user: user, params: { feed: feed })
-    self
+    @actions << LogAction.new(logger: logger, service: :import_alerts, user: user, params: { feed: feed })
   end
 
   def with_http_response(controller:)
-    actions << HttpResponseAction.new(controller: controller)
+    actions << HTTPResponseAction.new(controller: controller)
     self
   end
 
-  def with_subscriber_notification(factory:)
-    actions << NotifySubscribersAction.new(factory: factory)
+  def with_notification(factory:)
+    actions << NotificationAction.new(logger: logger, user: user, factory: factory)
     self
   end
 

@@ -1,12 +1,12 @@
-require_relative '../../adapters/builders/import_alerts_builder'
+require_relative '../../domain/builders/import_alerts_builder'
 require_relative '../../domain/value_objects/feed'
+require_relative '../../adapters/notifiers/notifier_factory'
 
 class AlertsController
   def import
-    ImportAlertsBuilder.new(reader)
-      .with_change_log(logger: logger, user: current_user, feed: feed)
-      .with_http_response(controller: self)
-      .with_subscriber_notification(factory: factory)
+    ImportAlertsBuilder.new(logger: logger, user: current_user, reader: reader, feed: feed)
+      .with_notification(factory: factory)
+      .with_http_response(controller: controller)
       .build
       .perform
   end
@@ -19,6 +19,10 @@ class AlertsController
 
   def logger
     Logger
+  end
+
+  def controller
+    self
   end
 
   def factory

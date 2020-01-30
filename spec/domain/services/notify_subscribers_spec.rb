@@ -1,5 +1,5 @@
 require_relative '../../../domain/services/notify_subscribers'
-require_relative '../../../adapters/factories/notifier_factory'
+require_relative '../../../adapters/notifiers/notifier_factory'
 require_relative '../../../domain/repositories/subscriber_repository'
 require_relative '../../../domain/entities/subscriber'
 

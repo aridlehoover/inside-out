@@ -1,4 +1,4 @@
-class LogChangesAction
+class LogAction
   attr_reader :logger, :service, :user, :params
 
   def initialize(logger:, service:, user:, params: {})
@@ -6,5 +6,11 @@ class LogChangesAction
     @service = service
     @user = user
     @params = params
+  end
+
+  def on_success(record)
+  end
+
+  def on_failure
   end
 end
